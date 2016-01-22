@@ -8,5 +8,31 @@
 *.war
 *.ear
 
+# OS or Editor folders
+.DS_Store
+Thumbs.db
+.cache
+.project
+.settings
+.tmproj
+*.esproj
+nbproject
+*.sublime-project
+*.sublime-workspace
+.metadata
+..settings
+.classpath
+*.iml
+*.ipr
+*.iws
+
+# Folders to ignore
+.hg
+.svn
+.CVS
+.idea
+bin
+target
+
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
