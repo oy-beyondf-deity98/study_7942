@@ -19,4 +19,18 @@ public class TestController {
 		  ExampleDao exampleDao = sqlSession.getMapper(ExampleDao.class);
 		  System.out.println(exampleDao.getUserName(userId));
 	  }
+	  
+	  
+	  @RequestMapping("/test/get/{userId}")
+	  @ResponseBody
+	  public void getUser(@PathVariable("userId") String userId)
+	  {
+		  ExampleDao exampleDao = sqlSession.getMapper(ExampleDao.class);
+		  UserVo userVo = new UserVo();
+		  userVo.setUserId("deity");
+		  
+		  UserVo rsVo = new UserVo();
+		  rsVo = exampleDao.getUser(userVo);
+		  System.out.println(rsVo.getUserName());
+	  }
 }
