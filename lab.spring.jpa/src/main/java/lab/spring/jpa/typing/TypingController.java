@@ -39,7 +39,7 @@ public class TypingController {
 		
 		//파일위치는 변할수 있다.
 		//파일중에서 txt인것만 추릴수 있었으면 좋겠다.
-		String path = "C:/Users/deity/workspace/lab.spring.jpa/src/main/webapp/upload";
+		String path = "C:/Users/deity/workspace_7942/lab.spring.jpa/src/main/webapp/upload";
 		FileUtil file = new FileUtil();
 		
 		file.setFileList(path).filterExt("txt");

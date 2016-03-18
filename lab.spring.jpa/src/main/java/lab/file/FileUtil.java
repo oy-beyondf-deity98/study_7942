@@ -68,6 +68,7 @@ public class FileUtil {
 		List<String> fileContent = new ArrayList<String>();
 		if(i> list.size()) i= list.size();
 		String strFile = list.get(i);
+		System.out.println("read file :" + strFile);
 		BufferedReader br = new BufferedReader(new FileReader(strFile));
 		while(true){
 			String line = br.readLine();
