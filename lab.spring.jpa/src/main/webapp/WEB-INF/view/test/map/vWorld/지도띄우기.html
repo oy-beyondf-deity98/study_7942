@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>vWorld 지도 API</title>
+	<link rel="stylesheet" href="./vworld.css" type="text/css" />
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+	<script type="text/javascript" src="http://map.vworld.kr/js/vworldMapInit.js.do?apiKey=8E811AB8-762C-3D4C-80EB-468279376EB7"></script>
+
+</head>
+<body>
+<div class="map_wrap">
+	<div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+    <div class="hAddr">
+        <span class="title">지도중심기준 행정동 주소정보</span>
+        <span id="centerAddr"></span>
+    </div>
+	<div id="menu_wrap" class="bg_white">
+		<div><button id="cur_loc">현재위치보기</button></div>
+		<div class="option">
+			<p>
+				<input type="text" id="txt_search_loc"><button id="btn_search_loc">장소검색</button>
+			</p>
+		</div>
+		<hr>
+		<ul id="placesList"></ul>
+		<div id="pagination"></div>
+	</div>
+	<button type="button" onclick="javascript:addMarkingEvent();" name="addpin" >마커찍기</button>
+	<button type="button" onclick="javascript:testMaker();" >마커테스트</button>
+	<button type="button" onclick="javascript:testPolygon();" >폴리곤테스트</button>
+</div>	
+</body>
+<script>
+var apiMap;//2D map
+var mControl;//마커이벤트변수
+
+vworld.showMode = true;//브이월드 배경지도 설정 컨트롤 유무(true:배경지도를 컨트롤 할수 있는 버튼 생성/false:버튼 해제) 
+
+$( document ).ready(function() {   
+	/**
+	 * - rootDiv, mapType, mapFunc, 3D initCall, 3D failCall
+	 * - 브이월드 5가지 파라미터를 셋팅하여 지도 호출
+	 */
+	vworld.init("map", "map-first", 
+		function() {        
+			apiMap = this.vmap;//브이월드맵 apiMap에 셋팅 
+			apiMap.setBaseLayer(apiMap.vworldBaseMap);//기본맵 설정 
+			apiMap.setControlsType({"simpleMap":true});	//간단한 화면	
+
+			apiMap.addEvent("movestart", mapEvt);
+			/* 
+			apiMap.addEvent("click",function(){
+				alert('');
+			});
+			 */
+	        //
+			apiMap.addVWORLDControl('zoomBar');
+			
+			 
+			//33.450701, 126.570667
+			 
+			apiMap.setCenterAndZoom(14243425.793355, 4342305.8698004, 8);//화면중심점과 레벨로 이동 (초기 화면중심점과 레벨) 	
+			//컨트롤을 두개이상 넣어도 안먹히고, 이벤트는 더 안먹힌다. 줌바띄우는 시간이 그렇게 오래걸리나?
+	        //apiMap.addEvent("movestart", mapEvt);
+	        //apiMap.removeEvent("movestart", mapEvt);
+	        //apiMap.addEvent("move", mapEvt);
+	        //apiMap.addEvent("moveend", mapEvt);
+	        //apiMap.addEvent("zoomend", mapEvt);
+			//apiMap.addEvent("click",addMarkingEvent);
+			//apiMap.addEvent("mouseover", moveAlert); //이벤트 등록
+		},
+		function (obj){//3D initCall(성공)
+			SOPPlugin = obj;
+		},
+		function (msg){//3D failCall(실패)
+			alert(msg);
+		}
+	);
+});
+
+/**
+ * 지도 이동 시작시 발생하는 이벤트
+ */
+function moveStart(){
+	
+	apiMap.addEvent("movestart", mapEvt);//(이벤트이름, 이벤트가 실행시 발생하는 function 이름)
+}
+
+/**
+ * 센터좌표값,레벨,스케일
+ */
+function mapEvt(){
+	//구글 좌표가 무엇인지 알아보기.
+    //var point = apiMap.getTransformXY(apiMap.getCenter().lon,apiMap.getCenter().lat,"EPSG:900913","EPSG:4326");//구글좌표를 경위도 좌표로 변환
+     
+    //if (point== null) return;
+    
+    
+    //alert('event222');
+    var center_point ='';
+    center_point = "경위 : " +apiMap.getCenter().lon+"/"+apiMap.getCenter().lat+"(축척:"+apiMap.getZoom()+","+apiMap.getScale()+")";
+    
+    $("#centerAddr").html(center_point);
+    //document.getElementById('centerAddr').value = center_point;
+    //$('').html();
+/*     
+    document.getElementById('centerx').value = point.x;//경위도 좌표 x
+    document.getElementById('centery').value = point.y;//경위도 좌표 y       
+    document.getElementById('centergx').value = apiMap.getCenter().lon;//구글좌표 x
+    document.getElementById('centergy').value = apiMap.getCenter().lat;//구글좌표 y
+    document.getElementById('level').value = apiMap.getZoom();//레벨  
+    document.getElementById('scale').value = apiMap.getScale();//스케일
+ */
+}
+
+/**
+ * 마커생성, 팝업레이어도 같이 만들어서 사용한다.
+ */
+function addMarker(lon, lat, message, imgurl){
+    var marker = new vworld.Marker(lon, lat,message,"");
+     
+    // 마커 아이콘 이미지 파일명 설정합니다.
+    if (typeof imgurl == 'string') {marker.setIconImage(imgurl);}
+     
+    // 마커의 z-Index 설정
+    marker.setZindex(3);
+     
+    apiMap.addMarker(marker);
+    tempMarker = marker; 
+}
+
+
+/**
+ * 마커 찍기
+ */
+function addMarkingEvent(){
+	
+	var pointOptions = {persist:true};//포인트옵션
+	if (mControl == null) {//마커컨트롤이 정의 되어 있지 않으면
+		mControl = 
+			new OpenLayers.Control.Measure(
+					OpenLayers.Handler.Point,
+					{handlerOptions:pointOptions});//포인트 객체 생성
+    	mControl.events.on({"measure":mClick});//객체를 클릭이벤트 등록
+    	apiMap.addControl(mControl);//나의 map에 객체 추가
+	}        
+	apiMap.init();//나의 맵 초기화
+    mControl.activate();//마커컨트롤 활성화
+}
+
+/**
+ * 말풍선이벤트
+ */
+function mClick(event){
+	apiMap.init();//나의 맵 초기화	
+	var temp = event.geometry;//마커 클릭이벤트시 나오는 좌표	
+	var pos = new OpenLayers.LonLat(temp.x, temp.y);//좌표값 셋팅
+	
+	document.getElementById('mousex').value = pos.lon;//구글좌표 x
+	document.getElementById('mousey').value = pos.lat;//구글좌표 y
+	
+	addMarker(pos.lon, pos.lat,"마커클릭시나오는말풀선.", null);//말풍선	
+}
+
+/**
+ * 제주도 이동 및 마커찍기
+ */
+function testMaker(){
+	//해당좌표로 지도 이동 및 말풍선 내용 표기
+	addMarker("14105383.450839", "3950184.1545913", "제주도입니다.", null);
+	
+	//해당좌표로 지도 이동 및 레벨 이동
+	apiMap.setCenterAndZoom(14105383.450839, 3950184.1545913, 11); 
+}
+
+function testPolygon(){
+	var point = "";
+	addPolygon(point);
+}
+
+/**
+ * void Polygon(OpenLayers.Geometry.Point points, StyleOptions opts)
+ 생성자 
+ void addNewPoint(OpenLayers.Geometry.Point point) 
+
+ */
+function addPolygon(p){
+	var polygon = new Polygon(null,null);
+		
+}
+</script>
+</html>

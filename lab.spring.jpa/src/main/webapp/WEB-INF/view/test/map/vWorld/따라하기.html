@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<title>addVWORLDControl</title>
+
+<!-- API key를 포함하여 브이월드 API URL을 지정하여 호출 시작  -->
+<script type="text/javascript" src="http://map.vworld.kr/js/vworldMapInit.js.do?apiKey=8E811AB8-762C-3D4C-80EB-468279376EB7"></script>
+<!-- API key를 포함하여 브이월드 API URL을 지정하여 호출끝  -->
+
+<script type="text/javascript">
+
+var apiMap;//2D map
+vworld.showMode = false;//브이월드 배경지도 설정 컨트롤 유무(true:배경지도를 컨트롤 할수 있는 버튼 생성/false:버튼 해제) 
+
+/**
+ * - rootDiv, mapType, mapFunc, 3D initCall, 3D failCall
+ * - 브이월드 5가지 파라미터를 셋팅하여 지도 호출
+ */
+vworld.init("vMap", "map-first", 
+	function() {        
+		apiMap = this.vmap;//브이월드맵 apiMap에 셋팅 
+		apiMap.setBaseLayer(apiMap.vworldBaseMap);//기본맵 설정 
+		apiMap.setControlsType({"simpleMap":true});	//간단한 화면	
+		
+		
+		apiMap.setCenterAndZoom(14243425.793355, 4342305.8698004, 8);//화면중심점과 레벨로 이동 (초기 화면중심점과 레벨) 	
+	},
+	function (obj){//3D initCall(성공)
+		SOPPlugin = obj;
+	},
+	function (msg){//3D failCall(실패)
+		alert(msg);
+	}
+);
+
+/**
+ * 기본컨트롤 추가
+ */
+function addVworldControl(control){
+	apiMap.addVWORLDControl(control);
+}
+
+/**
+ * 기본컨트롤 삭제
+ */
+function removeVworldControl(control){
+	apiMap.removeVWORLDControl(control);
+}
+
+</script>
+</head>
+<body>
+
+<!-- 지도가 들어갈 영역 시작 -->
+<div id="vMap" style="width:100%;height:650px;left:0px;top:0px"></div>
+<!-- 지도가 들어갈 영역 끝 -->
+<div id="desc" style="padding:5px 0 0 5px;">
+	<button type="button" onclick="addVworldControl('zoomBar');">줌바추가</button>
+	<button type="button" onclick="removeVworldControl('zoomBar');">줌바삭제</button>
+	<button type="button" onclick="addVworldControl('indexMap');">미니맵추가</button>
+	<button type="button" onclick="removeVworldControl('indexMap');">미니맵삭제</button>
+	<button type="button" onclick="addVworldControl('layerSwitch');">레이어 변경폼 추가</button>
+	<button type="button" onclick="removeVworldControl('layerSwitch');">레이어 변경폼 삭제</button>
+</div>
+</body>
+</html>
