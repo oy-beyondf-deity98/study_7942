@@ -1,3 +1,48 @@
+<!-- @Daum Editor -->
+    <link rel="stylesheet" href="/resources/plugins/daumeditor/css/editor.css" type="text/css"  charset="utf-8"/>
+    <script type="text/javascript" charset="utf-8" src="/resources/plugins/daumeditor/js/editor_loader.js?environment=symptom"></script>
+	<script type="text/javascript">
+	EditorJSLoader.ready(function() {
+	    var editorConfig = {
+	        txHost: '', /*#* 수정 불필요 *#*/
+	        txPath: '/resources/plugins/daumeditor/', /*#* 수정 불필요 *#*/
+	        txVersion: '', /*#* 수정 불필요 *#*/
+	        txService: '', /*#* 수정 불필요 *#*/
+	        txProject: '', /*#* 수정 불필요 *#*/
+	        txIP: '', /*#* 로컬검색 정렬 기준 파라메터 *#*/
+	        wrapper: "tx_trex_container", /*#* 에디터를 둘러싸고 있는 레이어 이름(에디터 컨테이너) *#*/
+	        form: 'tx_editor_form', /*#* 등록하기 위한 Form 이름 *#*/
+	        canvas: {
+	            showGuideArea: false
+	        },
+	
+	        events: {
+	            preventUnload: false
+	        },
+	        toolbar: {
+	            fontfamily: {
+	                webfont: {
+	                    use: true,
+	                    options: [
+	                        { label: '릭스꼬꼬마 <span class="tx-txt">(가나다라)</span>',		title: '릭스꼬꼬마', data: 'RixKidD', klass: 'tx-RixKidD', url: 'RixKidD.css' }
+	                    ]
+	                }
+	            }
+	        }
+	
+	    };
+	    EditorJSLoader.ready(function(Editor) {
+	        new Editor(editorConfig);
+	
+	        Editor.getCanvas().observeJob(Trex.Ev.__IFRAME_LOAD_COMPLETE, function(panelDoc) {
+	            window.ax = {};
+	            installHyperscript(ax, panelDoc);
+	        });
+	    });
+	
+	});
+	</script>
+
 <div id="tx_trex_container" class="tx-editor-container">
 <div id="tx_sidebar" class="tx-sidebar">
     <div class="tx-sidebar-boundary">
@@ -197,8 +242,8 @@
             <div class="tx-menu-inner">
             </div>
             <div class="tx-menu-footer">
-                <img class="tx-menu-confirm" src="images/icon/editor/btn_confirm.gif?rv=1.0.1" alt=""/>
-                <img class="tx-menu-cancel" hspace="3" src="images/icon/editor/btn_cancel.gif?rv=1.0.1" alt=""/>
+                <img class="tx-menu-confirm" src="/resources/plugins/daumeditor/images/icon/editor/btn_confirm.gif?rv=1.0.1" alt=""/>
+                <img class="tx-menu-cancel" hspace="3" src="/resources/plugins/daumeditor/images/icon/editor/btn_cancel.gif?rv=1.0.1" alt=""/>
             </div>
         </div>
     </li>
@@ -331,7 +376,7 @@
 </div>
 <div id="tx_canvas" class="tx-canvas">
     <div id="tx_loading" class="tx-loading">
-        <div><img src="images/icon/editor/loading2.png" width="113" height="21" align="absmiddle"/></div>
+        <div><img src="/resources/plugins/daumeditor/images/icon/editor/loading2.png" width="113" height="21" align="absmiddle"/></div>
     </div>
     <div id="tx_canvas_wysiwyg_holder" class="tx-holder" style="display:block;">
         <iframe id="tx_canvas_wysiwyg" name="tx_canvas_wysiwyg" allowtransparency="true" frameborder="0"></iframe>
@@ -347,12 +392,12 @@
 </div>
 <div id="tx_resizer" class="tx-resize-bar">
     <div class="tx-resize-bar-bg"></div>
-    <img id="tx_resize_holder" src="images/icon/editor/skin/01/btn_drag01.gif" width="58" height="12" unselectable="on"
+    <img id="tx_resize_holder" src="/resources/plugins/daumeditor/images/icon/editor/skin/01/btn_drag01.gif" width="58" height="12" unselectable="on"
          alt=""/>
 </div>
 <div class="tx-side-bi" id="tx_side_bi">
     <div style="text-align: right;">
-        <img hspace="4" height="14" width="78" align="absmiddle" src="images/icon/editor/editor_bi.png"/>
+        <img hspace="4" height="14" width="78" align="absmiddle" src="/resources/plugins/daumeditor/images/icon/editor/editor_bi.png"/>
     </div>
 </div>
 <div id="tx_attach_div" class="tx-attach-div">
@@ -361,7 +406,7 @@
         <div class="tx-attach-box-inner">
             <div id="tx_attach_preview" class="tx-attach-preview">
                 <p></p>
-                <img src="images/icon/editor/pn_preview.gif" width="147" height="108" unselectable="on"/>
+                <img src="/resources/plugins/daumeditor/images/icon/editor/pn_preview.gif" width="147" height="108" unselectable="on"/>
             </div>
             <div class="tx-attach-main">
                 <div id="tx_upload_progress" class="tx-upload-progress">
