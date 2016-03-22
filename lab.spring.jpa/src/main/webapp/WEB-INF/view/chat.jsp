@@ -23,7 +23,7 @@
 		<link href="http://fonts.googleapis.com/css?family=Lato:900" rel="stylesheet" type="text/css">        
 		
 		<!-- 파일업로드 모듈 -->
-		<script src="/js/dropzone.js"></script>
+		<script src="/resources/plugins/fileuploader/js/dropzone.js"></script>
 		<link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
 		
 </head>
