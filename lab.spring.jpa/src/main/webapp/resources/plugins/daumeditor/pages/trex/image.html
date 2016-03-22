@@ -3,12 +3,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>Daum에디터 - 이미지 첨부</title> 
+<script src="http://code.jquery.com/jquery.min.js"></script>
+
 <script src="../../js/popup.js" type="text/javascript" charset="utf-8"></script>
 
 <!-- 파일업로드 모듈 -->
 <script src="/resources/plugins/fileuploader/js/dropzone.js"></script>
-<link rel="stylesheet" href="https://rawgit.com/enyo/dropzone/master/dist/dropzone.css">
-
+<link rel="stylesheet" href="/resources/plugins/fileuploader/css/dropzone.css">
 
 <link rel="stylesheet" href="../../css/popup.css" type="text/css"  charset="utf-8"/>
 <script type="text/javascript">
@@ -18,14 +19,13 @@
 		if (typeof(execAttach) == 'undefined') { //Virtual Function
 	        return;
 	    }
-		
 		var _mockdata = {
 			'imageurl': 'http://cfile284.uf.daum.net/image/116E89154AA4F4E2838948',
 			'filename': 'editor_bi.gif',
 			'filesize': 640,
 			'imagealign': 'C',
-			'originalurl': 'http://cfile284.uf.daum.net/original/116E89154AA4F4E2838948',
-			'thumburl': 'http://cfile284.uf.daum.net/P150x100/116E89154AA4F4E2838948'
+			'originalurl': 'http://cfile284.uf.daum.net/image/116E89154AA4F4E2838948',
+			'thumburl': 'http://cfile284.uf.daum.net/image/116E89154AA4F4E2838948'
 		};
 		execAttach(_mockdata);
 		closeWindow();
@@ -50,7 +50,7 @@
 		<h1>사진 첨부</h1>
 	</div>	
 	<div class="body">
-      	 <form action="/uploadfile" class="dropzone dz-clickable">
+      	 <form id="img_file" action="/uploadfile" class="dropzone dz-clickable">
 		 	<div class="dz-default dz-message">
 		 		<span>Drop files here to upload</span>
 		 	</div>

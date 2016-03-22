@@ -17,6 +17,7 @@ import java.nio.file.Paths;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -26,22 +27,33 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
+
 @Controller
 public class FileController {
 	private static final String _SEPER_ = File.separator;	// 서버 구분자
 	private static int width = 500;
 	private static int height = 400;	
 	private static boolean isImageResize = false;
+	FileContent fileContent = new FileContent();
 	
 	@RequestMapping(value ="uploadfile", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<?> uploadFile(HttpServletRequest request, @RequestParam("file") MultipartFile uploadfile){
+		System.out.println("컨트롤러를 몇번이나 타는거야???");
 		String root = request.getSession().getServletContext().getRealPath("/");
 		String uploadDir = root + _SEPER_ +"upload";
 		
 		fileUpload(uploadDir, uploadfile);
 		
-	    return new ResponseEntity<>(HttpStatus.OK);
+		Gson gson = new Gson();
+		
+		String json = gson.toJson(fileContent);
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
+		
+		
+	    return new ResponseEntity<>(json,responseHeaders,HttpStatus.OK);
 	}
 	
 	private void fileUpload(String uploadDir, MultipartFile uploadfile){
@@ -53,7 +65,8 @@ public class FileController {
 		
 		String filename = uploadfile.getOriginalFilename();
 	    String filepath = Paths.get(uploadDir, filename).toString();
-	    System.out.println("업로드 디렉토리:"+uploadDir);
+	    
+	    //System.out.println("업로드 디렉토리:"+uploadDir);
 	    BufferedOutputStream stream = null;
 	    
 		try {
@@ -76,7 +89,10 @@ public class FileController {
 			try {	stream.close();	} catch (IOException e) {}
 		}    
 	    
-	    System.out.println(filepath);
+
+	    fileContent.setUrl(filepath);
+	    fileContent.setName(filename);
+	    
 	}
 
 	private boolean imageResize(String filepath, MultipartFile uploadfile) throws IllegalStateException, IOException {
@@ -110,3 +126,5 @@ public class FileController {
 	        return convFile;
 	}	
 }
+
+
