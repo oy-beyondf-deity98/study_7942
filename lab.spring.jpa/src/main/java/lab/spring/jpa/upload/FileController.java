@@ -40,9 +40,21 @@ public class FileController {
 	@RequestMapping(value ="uploadfile", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<?> uploadFile(HttpServletRequest request, @RequestParam("file") MultipartFile uploadfile){
-		System.out.println("컨트롤러를 몇번이나 타는거야???");
+		
+		//get root_url
+		StringBuffer requestUrl = request.getRequestURL();
+		String ctxUrl = requestUrl.toString();
+		ctxUrl = ctxUrl.substring(0, ctxUrl.lastIndexOf("/"));
+		
+		
+		
+		String path = _SEPER_ +"upload";
 		String root = request.getSession().getServletContext().getRealPath("/");
-		String uploadDir = root + _SEPER_ +"upload";
+		String uploadDir = root + path;
+		
+		fileContent.setRootUrl(ctxUrl);
+		fileContent.setPath(path);
+		fileContent.setRootDir(root);
 		
 		fileUpload(uploadDir, uploadfile);
 		
@@ -52,8 +64,7 @@ public class FileController {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "application/json; charset=UTF-8");
 		
-		
-	    return new ResponseEntity<>(json,responseHeaders,HttpStatus.OK);
+		return new ResponseEntity<>(json,responseHeaders,HttpStatus.OK);
 	}
 	
 	private void fileUpload(String uploadDir, MultipartFile uploadfile){
@@ -89,9 +100,7 @@ public class FileController {
 			try {	stream.close();	} catch (IOException e) {}
 		}    
 	    
-
-	    fileContent.setUrl(filepath);
-	    fileContent.setName(filename);
+		fileContent.setName(filename);
 	    
 	}
 

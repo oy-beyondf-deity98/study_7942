@@ -1,17 +1,36 @@
 package lab.spring.jpa.upload;
 
-public class FileContent {
+import java.io.File;
 
-	private String url;
+public class FileContent {
+	private static final String _SEPER_ = File.separator;	// 서버 구분자
+	
+	private String rootUrl;
+	private String rootDir;
+	private String path;
 	private String name;
 	private String size;
-	private String thumb_url;
+	private String thumbUrl;
+	private String url;
+	private String file;
 	
-	public String getUrl() {
-		return url;
+	public String getRootUrl() {
+		return rootUrl;
 	}
-	public void setUrl(String url) {
-		this.url = url;
+	public void setRootUrl(String rootUrl) {
+		this.rootUrl = rootUrl;
+	}
+	public String getRootDir() {
+		return rootDir;
+	}
+	public void setRootDir(String rootDir) {
+		this.rootDir = rootDir;
+	}
+	public String getPath() {
+		return path;
+	}
+	public void setPath(String path) {
+		this.path = path;
 	}
 	public String getName() {
 		return name;
@@ -25,11 +44,23 @@ public class FileContent {
 	public void setSize(String size) {
 		this.size = size;
 	}
-	public String getThumb_url() {
-		return thumb_url;
+	public String getThumbUrl() {
+		return thumbUrl;
 	}
-	public void setThumb_url(String thumb_url) {
-		this.thumb_url = thumb_url;
+	public void setThumbUrl(String thumbUrl) {
+		this.thumbUrl = thumbUrl;
+	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl() {
+		this.url = this.rootUrl +"/"+ this.path +"/"+ this.name;;
+	}
+	public String getFile() {
+		return file;
+	}
+	public void setFile() {
+		this.file = this.rootDir +_SEPER_+ this.path +_SEPER_+ this.name;
 	}
 	
 	

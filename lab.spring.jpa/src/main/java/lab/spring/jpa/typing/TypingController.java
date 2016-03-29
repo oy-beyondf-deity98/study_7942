@@ -6,13 +6,15 @@ import java.util.List;
 import java.util.Random;
 import java.util.StringTokenizer;
 
-import lab.file.FileUtil;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import lab.file.FileUtil;
 
 /**
  * json형태여야지 json으로 돌려주나보다. 편리하긴 하네.
@@ -21,10 +23,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class TypingController {
+	@Autowired MemoRepository repository;
+	
 	
 	List<String> list = new ArrayList<String>();
 	
-	@RequestMapping("chat/typing")
+	@RequestMapping("chat/typing") //chat/typing
 	@ResponseBody
 	public String chattype() throws IOException{
 		JSONObject json = new JSONObject();
@@ -39,7 +43,7 @@ public class TypingController {
 		
 		//파일위치는 변할수 있다.
 		//파일중에서 txt인것만 추릴수 있었으면 좋겠다.
-		String path = "C:/Users/deity/workspace_7942/lab.spring.jpa/src/main/webapp/upload";
+		String path = "/Users/kimgyupyo/Documents/myapp/workspace/study_7942/lab.spring.jpa/src/main/webapp/upload";
 		FileUtil file = new FileUtil();
 		
 		file.setFileList(path).filterExt("txt");
@@ -87,6 +91,17 @@ public class TypingController {
 		
 	}
 	
+	@RequestMapping("/input/memo")
+	@ResponseBody
+	public String memoInput(@RequestParam String input_memo) throws IOException{
+		System.out.println(input_memo);
+		Memo memo = new Memo();
+		memo.setMemo(input_memo);
+		repository.save(memo);
+		
+		return "";
+	}
+	
 	@RequestMapping("chat")
 	String chat(){
 		return "chat";
@@ -96,5 +111,10 @@ public class TypingController {
 	String typing(){
 		
 		return "typing";
-	}		
+	}
+	
+	@RequestMapping("/memo")
+	String memoPage(){
+		return "memo";
+	}
 }

@@ -14,20 +14,30 @@
 <link rel="stylesheet" href="../../css/popup.css" type="text/css"  charset="utf-8"/>
 <script type="text/javascript">
 // <![CDATA[
-	
-	function done() {
+	$(function() {
+	  // Now that the DOM is fully loaded, create the dropzone, and setup the
+	  // event listeners
+	  var myDropzone = new Dropzone("#img_file");
+	  myDropzone.on("success", function(file,responText,status) {
+		  done(responText)
+	    /* Maybe display some more file information on your page */
+	  });
+	});
+	function done(data) {
 		if (typeof(execAttach) == 'undefined') { //Virtual Function
 	        return;
 	    }
-		var _mockdata = {
-			'imageurl': 'http://cfile284.uf.daum.net/image/116E89154AA4F4E2838948',
-			'filename': 'editor_bi.gif',
-			'filesize': 640,
+		//url이 웹으로 되어있어야지 정상적으로 화면에 보여진다 유의하도록 하자.
+		var url = data.rootUrl + "/"+ data.path + "/" + data.name;
+		var json_data = {
+			'imageurl': url,
+			'filename': data.name,
+			'filesize': 1000,
 			'imagealign': 'C',
-			'originalurl': 'http://cfile284.uf.daum.net/image/116E89154AA4F4E2838948',
-			'thumburl': 'http://cfile284.uf.daum.net/image/116E89154AA4F4E2838948'
+			'originalurl': url,
+			'thumburl': url
 		};
-		execAttach(_mockdata);
+		execAttach(json_data);
 		closeWindow();
 	}
 

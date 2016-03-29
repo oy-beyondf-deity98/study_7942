@@ -193,7 +193,7 @@
 		    	//http://api.geonames.org/citiesJSON?north=44.1&south=-9.9&east=-22.4&west=55.2&lang=de&username=demo
 		        //var url = "/life/test.json?callback=?";
 		        //http://61.250.201.170:8182
-		        var url = "chat/input";
+		        var url = "input/chat";
 		        //var url = "http://192.168.0.10:8080/life/rest_object/todo";
 		        //var url = "http://61.250.201.202:9423/life/rest_object/todo";
 		        //http://192.168.0.10:8080/life/brower.html
@@ -269,7 +269,5 @@
 		        	window.open(popUrl,"",popOption);
 		        });
 		    });
-		    
-
 		</script>
 </html>

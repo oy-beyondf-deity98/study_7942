@@ -165,8 +165,8 @@
 		}
 	</script>
 	<style>
-		#httpBox {border:1px solid #cccccc;width:600px;padding:4px;}
-		#httpBox .smallBox {width:100%;background-color:#f5f5f5;border:1px solid #cccccc;padding:2px;font-size:9pt;font-family:'malgun gothic';text-align:center;}
+		#httpBox {border:1px solid #cccccc;width:900px;padding:4px;}
+		#httpBox .smallBox {width:100%;background-color:#f5f5f5;border:1px solid #cccccc;padding:2px;font-size:20pt;font-family:'malgun gothic';text-align:center;}
 		#httpBox .ph {height:4px;font-size:0px;}
 		#httpBox .textbox {width:95%;border:0px;background-color:#f5f5f5;text-align:center;}
 		#httpBox #status {width:100%;}
