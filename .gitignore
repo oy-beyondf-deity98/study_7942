@@ -33,7 +33,9 @@ nbproject
 .idea
 bin
 target
-Servers
+
+# Folders to ignore(in sub Folders)
+Servers/
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 <<<<<<< HEAD
@@ -41,4 +43,3 @@ hs_err_pid*
 =======
 hs_err_pid*
 >>>>>>> branch 'master' of https://github.com/DBheart/study_7942.git
-Servers/
