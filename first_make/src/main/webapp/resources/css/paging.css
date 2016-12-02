@@ -1,0 +1,39 @@
+@CHARSET "UTF-8";
+/* http://www.w3schools.com/css/css3_pagination.asp# */
+
+.paging ul {  
+	display: inline-block;
+    padding: 0;
+    margin: 0;    
+}  
+.paging ul li {  
+	display: inline;  
+    
+}  
+
+.paging ul li a.active {
+    background-color: #4CAF50;
+    color: white;    
+    border-radius: 5px;
+}
+
+.paging ul li a:hover:not(.active) {
+	background-color: #ddd;
+}
+  
+.paging ul li a {  
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    font:bold 12px tahoma;  
+    border-radius: 5px;
+}  
+
+/* 
+.paging ul li a:hover, ul li a:focus {  
+    color:#fff;  
+    border:1px solid #f40;  
+    background-color:#f40;  
+} */
+

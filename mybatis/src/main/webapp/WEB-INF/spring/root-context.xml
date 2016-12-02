@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+	">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+		
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:xe" />
+		<!-- property name="url" value="jdbc:log4jdbc:oracle:thin:@40.74.112.204:1521:xe"/ --> 
+		<property name="username" value="property"/>
+		<property name="password" value="property"/>
+	</bean>
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations" value="classpath*:deity/frame/mybatis/mapper/*.xml" />
+	</bean>
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory" />
+	</bean>
+	 
+	 <!-- Transactional, 스프링으로 트랜잭션 넘김  -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<!-- Service Mapping, mapper interface 선언,SqlSessionDaoSupport로 사용시에 필요하다. -->
+	<bean id="book" class="deity.frame.mybatis.BookRepository" scope="singleton">
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+	</bean>
+	
+		
+</beans>

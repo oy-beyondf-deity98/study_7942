@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="query.code">
+	<select id="listCodeCnt" parameterType="deity.frame.first.common.SearchVo" resultType="int">
+		SELECT count(1)
+		  FROM T_CODE
+		<if test="search != null">	
+		 WHERE (CODE_NM LIKE '%' || #{search} || '%'
+		        or REMARK LIKE '%' || #{search} || '%'
+		        or NOTE LIKE '%' || #{search} || '%'
+		       ) 	  
+		</if>
+	</select>
+
+	<select id="listCode" parameterType="deity.frame.first.common.SearchVo" resultType="deity.frame.first.domain.Code">
+		${pagingStart}
+		SELECT A.*
+		     , (SELECT CODE_NM 
+			      FROM T_CODE K 
+				 WHERE K.CODE = A.PARENT_CODE
+			   ) AS PARENT_NM
+		  FROM T_CODE A
+		<if test="search != null">	
+		 WHERE (CODE_NM LIKE '%' || #{search} || '%'
+		        or REMARK LIKE '%' || #{search} || '%'
+		        or NOTE LIKE '%' || #{search} || '%'
+		       ) 	  			  
+		</if>
+		${pagingEnd}
+	</select>
+	<select id="getCode" parameterType="String" resultType="deity.frame.first.domain.Code">
+		SELECT *
+		  FROM T_CODE
+		 WHERE CODE = #{code}
+	</select>
+	
+	<insert id="insertCode" parameterType="deity.frame.first.domain.Code">
+		INSERT INTO T_CODE(
+		       CODE
+		     , CODE_NM
+		     , CODE_NM_ENG
+		     , PARENT_CODE
+		     , ORDER_NUM
+		     , NOTE
+		     , REMARK
+		     , IS_USE
+		     , IS_LOCK
+		     , CREATE_USER   
+		     , CREATE_DATE   
+		     , UPDATE_USER   
+		     , UPDATE_DATE		     
+		) VALUES (
+		       #{code}
+		     , #{code_nm}
+		     , #{code_nm_eng}
+		     , #{parent_code}
+		     , #{order_num}
+		     , #{note}
+		     , #{remark}
+		     , #{is_use}
+		     , #{is_lock}
+		     , #{create_user}   
+		     , SYSDATE   
+		     , #{update_user}   
+		     , SYSDATE		     		     
+		)     
+	</insert>
+	
+	<update id="updateCode" parameterType="deity.frame.first.domain.Code">
+		UPDATE T_CODE
+		   SET CODE_NM     = #{code_nm}
+		     , CODE_NM_ENG = #{code_nm_eng}
+		     , PARENT_CODE = #{parent_code}
+		     , ORDER_NUM   = #{order_num}
+		     , NOTE        = #{note} 
+		     , REMARK      = #{remark}
+		     , IS_USE      = #{is_use}
+		     , UPDATE_USER = #{update_user}  
+		     , UPDATE_DATE = SYSDATE		     
+		 WHERE CODE = #{code}
+	</update>
+	
+	<select id="ableDeleteCode" parameterType="String" resultType="java.util.HashMap">
+		SELECT *
+		  FROM T_CODE A
+		 WHERE CODE = #{code}
+		   AND (IS_LOCK = 1
+		       OR EXISTS (SELECT *
+		                     FROM T_CODE B
+		                    WHERE B.PARENT_CODE = A.CODE   
+		                  )
+		       )
+		   
+	</select>
+		
+	<delete id="deleteCode" parameterType="String">
+		DELETE 
+		  FROM T_CODE
+		 WHERE CODE = #{code}	
+		   AND IS_LOCK = 0
+	</delete>
+</mapper>

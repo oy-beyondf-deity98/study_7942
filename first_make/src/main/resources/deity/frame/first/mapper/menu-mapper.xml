@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="query.menu">
+	<select id="listMenuCnt" parameterType="deity.frame.first.common.SearchVo" resultType="int">
+		SELECT count(1)
+		  FROM T_MENU
+		<if test="search != null">	
+		 WHERE (MENU_NM LIKE '%' || #{search} || '%')	  
+		</if>
+	</select>
+
+	<select id="listMenu" parameterType="deity.frame.first.common.SearchVo" resultType="deity.frame.first.domain.Menu">
+		${pagingStart}
+		SELECT A.*
+		     , (SELECT SUBSTR(SYS_CONNECT_BY_PATH(K.MENU_NM,'>'),2) 
+			      FROM T_MENU K 
+				 WHERE K.MENU_SEQ = A.PARENT_MENU
+				 START WITH K.PARENT_MENU = 0
+			   CONNECT BY PRIOR K.MENU_SEQ = K.PARENT_MENU
+			   ) AS PARENT_MENU_NM
+		  FROM T_MENU A
+		<if test="search != null">		
+		 WHERE (MENU_NM LIKE '%' || #{search} || '%')  
+		</if>
+		${pagingEnd}
+	</select>
+	<select id="getMenu" parameterType="String" resultType="deity.frame.first.domain.Menu">
+		SELECT A.*
+		     , (SELECT SUBSTR(SYS_CONNECT_BY_PATH(K.MENU_NM,'>'),2) 
+			      FROM T_MENU K 
+				 WHERE K.MENU_SEQ = A.PARENT_MENU
+				 START WITH K.PARENT_MENU = 0
+			   CONNECT BY PRIOR K.MENU_SEQ = K.PARENT_MENU
+			   ) AS PARENT_MENU_NM
+		  FROM T_MENU A
+		 WHERE MENU_SEQ = #{menu_seq}
+	</select>
+	
+	<select id="getMenuLocation" parameterType="String" resultType="String">
+		SELECT MIN(SUBSTR(SYS_CONNECT_BY_PATH(K.MENU_NM,'>'),2)) AS MENU_LOCATION 
+	      FROM T_MENU K 
+		 WHERE MENU_URL = #{menu_url}
+		 START WITH K.PARENT_MENU = 0
+	   CONNECT BY PRIOR K.MENU_SEQ = K.PARENT_MENU
+	</select>	
+	
+	
+	
+	<insert id="insertMenu" parameterType="deity.frame.first.domain.Menu">
+		INSERT INTO T_MENU(
+		   MENU_SEQ      
+		   ,MENU_NM       
+		   ,MENU_URL      
+		   ,PARENT_MENU        
+		   ,ORDER_NUM     
+		   ,CREATE_USER   
+		   ,CREATE_DATE   
+		   ,UPDATE_USER   
+		   ,UPDATE_DATE
+		) VALUES (
+		   MENU_SEQ.NEXTVAL      
+		   ,#{menu_nm}       
+		   ,#{menu_url}      
+		   ,#{parent_menu}      
+		   ,#{order_num}     
+		   ,#{create_user}   
+		   ,SYSDATE   
+		   ,#{update_user}   
+		   ,SYSDATE
+		)		
+	</insert>
+	
+	<update id="updateMenu" parameterType="deity.frame.first.domain.Menu">
+		UPDATE T_MENU
+		   SET MENU_NM     = #{menu_nm}       
+		     , MENU_URL    = #{menu_url}     
+		     , PARENT_MENU = #{parent_menu}    
+		     , ORDER_NUM   = #{order_num}     
+		     , UPDATE_USER = #{update_user}  
+		     , UPDATE_DATE = SYSDATE
+		 WHERE MENU_SEQ = #{menu_seq}  
+	</update>
+	
+	<delete id="deleteMenu" parameterType="String">
+		DELETE FROM T_MENU
+		 WHERE MENU_SEQ = #{menu_seq}
+	</delete>
+	<select id="treeMenu" resultType="java.util.HashMap">
+
+ 
+		SELECT * 
+		  FROM (
+				SELECT TO_CHAR(MENU_SEQ) AS ID
+				     , SUBSTR(SYS_CONNECT_BY_PATH(MENU_NM,'>'),2) AS TEXT
+				     , TO_CHAR(PARENT_MENU) AS PARENT 
+					 , LEVEL MENU_DEPTH  
+				  FROM T_MENU
+				 START WITH PARENT_MENU = 0
+				 CONNECT BY PRIOR MENU_SEQ = PARENT_MENU
+				 ORDER SIBLINGS BY ORDER_NUM
+		       )	
+	</select>
+	
+	<select id="listTopMenu" resultType="java.util.HashMap">
+		SELECT A.* 
+			 , LEVEL MENU_DEPTH  
+			 , SUBSTR(SYS_CONNECT_BY_PATH(MENU_NM,'>'),2) AS MENU_LOCATION
+		  FROM T_MENU A
+		 START WITH PARENT_MENU = 0
+		 CONNECT BY PRIOR MENU_SEQ = PARENT_MENU
+		 ORDER SIBLINGS BY ORDER_NUM
+	</select>	
+	
+	<select id="authMenuList" parameterType="String" resultType="java.util.HashMap">
+		
+		SELECT A.* 
+			 , LEVEL MENU_DEPTH  
+			 , SUBSTR(SYS_CONNECT_BY_PATH(MENU_NM,'>'),2) AS MENU_LOCATION
+		  FROM T_MENU A
+		 WHERE MENU_SEQ not in (SELECT MENU_SEQ FROM T_AUTH_MENU WHERE AUTH_SEQ = #{auth_seq})
+           --AND MENU_DEPTH = 1 --메인메뉴로 제한한다.
+		 START WITH PARENT_MENU = 0
+		 CONNECT BY PRIOR MENU_SEQ = PARENT_MENU
+		 ORDER SIBLINGS BY ORDER_NUM 		  
+	</select>
+	
+	<select id="topMenu" parameterType="String" resultType="java.util.HashMap">
+		SELECT A.MENU_SEQ
+		     , A.MENU_NM
+			 , A.MENU_URL
+			 , A.PARENT_MENU
+			 , A.ORDER_NUM 
+			 , LEVEL MENU_DEPTH  
+			 , SUBSTR(SYS_CONNECT_BY_PATH(MENU_NM,'>'),2) AS MENU_LOCATION
+		  FROM T_MENU A
+		 WHERE MENU_SEQ IN (
+							SELECT MENU_SEQ FROM T_AUTH_MENU
+							WHERE AUTH_SEQ IN (
+												SELECT AUTH_SEQ FROM T_AUTH_USER
+												 WHERE USER_ID ='admin'
+											  ) 		 
+		                   )
+		 START WITH PARENT_MENU = 0
+		 CONNECT BY PRIOR MENU_SEQ = PARENT_MENU
+		 ORDER SIBLINGS BY ORDER_NUM
+	</select>		
+	
+		
+</mapper>

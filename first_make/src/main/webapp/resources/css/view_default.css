@@ -1,0 +1,80 @@
+@CHARSET "UTF-8";
+.top {
+  position: absolute;
+  left: 0px;
+}
+
+.search_form {
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #369;
+    border-bottom: 3px solid #036;
+}
+
+.list {
+    border-collapse: separate;
+    border-spacing: 1px;
+    text-align: center;
+    line-height: 1.5;
+    margin: 20px 10px;
+}
+.list th {
+    width: 155px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #fff;
+    background: #ce4869 ;
+}
+.list td {
+    width: 155px;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #eee;
+}
+
+.page_name{
+	border-collapse: collapse;
+    text-align: left;
+    line-height: 1.5;
+    border-bottom: 1px solid #ccc;
+    border-left: 3px solid #369;
+  	margin : 20px 10px;	
+}
+
+.input_form {
+    border-collapse: separate;
+    border-spacing: 1px;
+    text-align: left;
+    line-height: 1.5;
+    border-top: 1px solid #ccc;
+    margin: 20px 10px;
+}
+.input_form th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #efefef;
+}
+.input_form td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+}
+
+tfoot {
+    width: 350px;
+    padding: 10px;
+    text-align: right;
+    border-bottom: none;
+}
+
+.errorMsg { 
+	font-size:12px;
+    color: red; 
+}

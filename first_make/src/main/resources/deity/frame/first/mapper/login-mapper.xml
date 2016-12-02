@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="query.login">
+	<select id="getLoginInfo" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		SELECT USER_ID
+		     , USER_NM
+		  FROM T_USER
+		 WHERE USER_ID = #{user_id}
+		   AND USER_PWD = #{user_pwd}
+		   AND IS_USE = 'Y'
+	</select>
+</mapper>

@@ -1,0 +1,28 @@
+목적 : 컨트롤러와 화면과의 관계 확인
+
+1. 주요기술 
+1.1 요청처리자 찾기
+@Controller
+@RequestMapping("/test") : 클래스에서 한개, 메소드에서 한개
+	- 클래스에서는 클래스 전체에 url값
+	- 메소드에서는 클래스 + 메소드에 url값 
+@RequestParam : get방식의 파람이 있을때 쓴다. requied =false로 안하면파라미터 값을 꼭 넘겨야한다.
+@ModelAttribute : 객체성의 Object와 자동으로 매핑, POST에서 주로 쓰도록 한다.
+
+1.2 요청에 대한 리턴값 주기
+ModelAndView 와 Model : 리턴값과 리턴 URL호출
+
+1.3 요청값이 정확한지 체크하기
+@Valid 과 hibernate-validator, 스프링태그라이브러리: 화면의 밸리데이션 체크를 객체성 Object에서 진행
+	- 스프링 태그라이브러리 : <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
+1.4 리턴값의 포맷 정하기
+컨텐츠에 따라 리턴값을 달리주는 리졸버 와 mashaling, oxm : 
+	- 리졸버 : ContentNegotiatingViewResolver, .json으로 할경우 json값으로 .xml으로 호출할 경우 xml값으로 리턴
+
+
+---
+
+기본구조 생성 : STS ->Spring Legacy Project -> Spring MVC Project
+- Spring 3.1.1
+- Java 1.8 : 1.6으로 생성되나 1.8로 바꿈

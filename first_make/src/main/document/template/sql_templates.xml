@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><templates><template autoinsert="true" context="xml_new" deleted="false" description="ibatis_sql" enabled="true" name="_deity_sql">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"&gt;
+
+&lt;mapper namespace="query.user"&gt;
+	&lt;select id="list도메인클래스Cnt" parameterType="deity.frame.패키지기본.common.SearchVo" resultType="int"&gt;
+		SELECT count(1)
+		  FROM T_테이블
+		&lt;if test="search != null"&gt;		  
+		&lt;/if&gt;
+	&lt;/select&gt;
+
+	&lt;select id="list도메인클래스" parameterType="deity.frame.패키지기본.common.SearchVo" resultType="deity.frame.패키지기본.domain.도메인클래스"&gt;
+		${pagingStart}
+		SELECT *
+		  FROM T_테이블
+		&lt;if test="search != null"&gt;		  
+		&lt;/if&gt;
+		${pagingEnd}
+	&lt;/select&gt;
+	&lt;select id="get도메인클래스" parameterType="String" resultType="deity.frame.패키지기본.domain.도메인클래스"&gt;
+		SELECT *
+		  FROM T_테이블
+		 WHERE 테이블_ID = #{user_id}
+	&lt;/select&gt;
+	
+	&lt;insert id="insert도메인클래스" parameterType="deity.frame.패키지기본.domain.도메인클래스"&gt;
+	&lt;/insert&gt;
+	
+	&lt;update id="update도메인클래스" parameterType="deity.frame.패키지기본.domain.도메인클래스"&gt;
+	&lt;/update&gt;
+	
+	&lt;update id="update도메인클래스Pwd" parameterType="deity.frame.패키지기본.domain.도메인클래스"&gt;
+	&lt;/update&gt;
+	
+	&lt;delete id="delete도메인클래스" parameterType="String"&gt;
+	&lt;/delete&gt;
+&lt;/mapper&gt;</template></templates>

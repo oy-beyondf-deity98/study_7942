@@ -1,0 +1,268 @@
+			* {
+				-webkit-box-sizing: border-box;
+				-moz-box-sizing: border-box;
+				box-sizing: border-box;
+			}
+			body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, form, fieldset, p, button, input, label {
+				margin: 0;
+				padding: 0
+			}
+			body, h1, h2, h3, h4, input, button, select {
+				font-family: "Nanum Gothic", sans-serif;
+			}
+
+			button {
+				padding: 0 10px;
+				font-size: 12px;
+				margin: 2px;
+				min-width: 48px;
+				display: inline-block;
+				line-height: 28px;
+				color: #333333;
+				text-align: center;
+				text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+				background-color: #fafafa;
+				background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), color-stop(25%, #ffffff), to(#e6e6e6));
+				background-image: -webkit-linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
+				background-image: -moz-linear-gradient(top, #ffffff, #ffffff 25%, #e6e6e6);
+				background-image: -ms-linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
+				background-image: -o-linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
+				background-image: linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
+				background-repeat: no-repeat;
+				filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e6e6e6', GradientType=0);
+				border: 1px solid #ccc;
+				border-bottom-color: #bbb;
+				border-radius: 4px;
+				-webkit-border-radius: 4px;
+				-moz-border-radius: 4px;
+				-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+				-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+				box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+				cursor: pointer;
+				*margin-left: .3em;
+			}
+			button:hover {
+				color: #333333;
+				text-decoration: none;
+				background-color: #e6e6e6;
+				background-position: 0 -15px;
+				-webkit-transition: background-position 0.1s linear;
+				-moz-transition: background-position 0.1s linear;
+				-ms-transition: background-position 0.1s linear;
+				-o-transition: background-position 0.1s linear;
+				transition: background-position 0.1s linear;
+			}
+			button:focus {
+				outline: thin dotted;
+				outline: 5px auto -webkit-focus-ring-color;
+				outline-offset: -2px;
+			}
+			button:active {
+				background-image: none;
+				-webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+				-moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+				box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+				background-color: #e6e6e6;
+				background-color: #d9d9d9 \9;
+				color: rgba(0, 0, 0, 0.5);
+				outline: 0;
+			}
+
+			/* class: button.hotpink,  color theme: Miss Piggy loves Kermit */
+			button.hotpink {
+				text-shadow: 0px -1px 0px #c8203f;
+				color: #ffffff;
+				background-color: #E63E5D;
+				background-image: -moz-linear-gradient(top, #ff5c7b, #c8203f);
+				background-image: -ms-linear-gradient(top, #ff5c7b, #c8203f);
+				background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ff5c7b), to(#c8203f));
+				background-image: -webkit-linear-gradient(top, #ff5c7b, #c8203f);
+				background-image: -o-linear-gradient(top, #ff5c7b, #c8203f);
+				background-image: linear-gradient(top, #ff5c7b, #c8203f);
+				filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5c7b', endColorstr='#c8203f', GradientType=0);
+				border-color: #E63E5D #c8203f #c8203f #E63E5D;
+				border-color: rgba(0, 0, 0, 0.25) rgba(0, 0, 0, 0.35) rgba(0, 0, 0, 0.35) rgba(0, 0, 0, 0.25);
+			}
+			button.hotpink:hover, button.hotpink:active, button.hotpink.active, button.hotpink.disabled, button.hotpink[disabled] {
+				background-color: #c8203f;
+			}
+			button.hotpink:hover {
+				color: #ffffff;
+				text-shadow: 0px -1px 0px #aa0221;
+			}
+			button.hotpink:focus {
+				color: #ffa2c1;
+				-webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+				-moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+				box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+				border-color: #E63E5D #c8203f #c8203f #E63E5D;
+				border-color: rgba(0, 0, 0, 0.25) rgba(0, 0, 0, 0.35) rgba(0, 0, 0, 0.35) rgba(0, 0, 0, 0.25);
+			}*/
+			button.hotpink.active, button.hotpink:active {
+				background-image: none;
+				-webkit-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+				-moz-box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+				box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+				color: #ffa2c1;
+			}
+			/* end button.hotpink */
+			/* input type:check */
+			.inputCheck {
+				width: 14px;
+				height: 14px;
+				position: relative;
+				top: 0px;
+				display: inline-block;
+				margin: 0 8px;
+			}
+			.inputCheck label {
+				width: 14px;
+				height: 14px;
+				cursor: pointer;
+				position: absolute;
+				top: 0;
+				left: 0;
+				background-color: #ddd;
+				border-radius: 4px;
+				border: 1px solid #BDBDBD;
+			}
+			.inputCheck label:after {
+				content: '';
+				width: 6px;
+				height: 3px;
+				position: absolute;
+				top: 2px;
+				left: 2px;
+				border: 2px solid #333;
+				border-top: none;
+				border-right: none;
+				background: transparent;
+				opacity: 0;
+				-webkit-transform: rotate(-45deg);
+				-ms-transform: rotate(-45deg);
+				transform: rotate(-45deg);
+			}
+			.inputCheck label:hover::after {
+				opacity: 0.3;
+			}
+			.inputCheck input[type=checkbox] {
+				visibility: hidden;
+				height: auto;
+			}
+			.inputCheck input[type=checkbox]:checked + label:after {
+				opacity: 1;
+				border-color: #fff;
+			}
+			.inputCheck input[type=checkbox]:checked + label {
+				background: #4D4D4D;
+				border: 1px solid #4D4D4D;
+			}
+
+			body {
+				background: #e7e7e7
+			}
+			.wrap {
+				position: relative;
+				height: 100%;
+				min-width: 1100px;
+			}
+			select {
+				height: 30px;
+				border-radius: 4px;
+				border: 1px solid #ccc;
+				padding-left: 4px;
+				font-size: 12px;
+				width: 100%;
+			}
+			input {
+				display: inline-block;
+				width: 100%;
+				height: 30px;
+				padding: 0 8px;
+				font-size: 12px;
+				line-height: 1.5;
+				color: #555;
+				background-color: #fff;
+				background-image: none;
+				border: 1px solid #ccc;
+				border-radius: 4px;
+				-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+				box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+				-webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+				-o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+				transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+			}
+			/* loginPanel */
+			.loginPanel {
+				width: 756px;
+				height: 314px;
+				margin: 0 auto;
+				background: url('../img/login_penal.png') center no-repeat;
+				position: relative;
+				top: 200px;
+				font-size: 12px;
+			}
+			.loginPanel > div {
+				padding: 94px 70px 55px 270px;
+				height: 314px;
+				background: url('../img/login_logo.png') 74px center no-repeat;
+				background-size: 20%;
+			}
+			.loginPanel h1 {
+				color: #8F909B;
+				margin-bottom: 1px;
+				font-variant: small-caps;
+				letter-spacing: 0.4px;
+				font-size: x-large;
+			}
+
+			.loginPanel li {
+				display: inline-block;
+				width: 49%;
+			}
+			.loginPanel li:first-child {
+				margin-right: 4px;
+			}
+			.loginPanel li:last-child {
+				margin-top: 10px;
+			}
+			.loginPanel .inputCheck {
+				margin-top: 8px;
+				top: 0;
+			}
+			.login_id input {
+				height: 30px;
+				width: 204px;
+			}
+			.login_txt {
+				margin-bottom: 8px;
+			}
+			.controlPanel {
+				margin-top: 8px;
+				height: 34px;
+			}
+			.controlPanel button {
+				width: 96px;
+				height: 34px;
+				float: right;
+				margin: 0;
+				margin-right: 4px;
+			}
+			.login-copy {
+				position: absolute;
+				top: 522px;
+				width: 100%;
+			}
+			.login-copy footer {
+				border-top: 0
+			}
+			/* //loginPanel */
+			/* footer copyright */
+			footer {
+				padding: 30px 0 76px;
+				text-align: center;
+				border-top: 1px solid #ddd;
+				color: #7d7e80;
+				font-size: small;
+			}
+			/* //footer copyright */

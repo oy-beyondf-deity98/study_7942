@@ -1,0 +1,27 @@
+2016.8.25
+
+목적 : 기본적인 프레임워크 항목 체크
+
+1. 리턴값의 포맷 정하기
+컨텐츠에 따라 리턴값을 달리주는 리졸버 와 mashaling, oxm : 
+	- 리졸버 : ContentNegotiatingViewResolver, .json으로 할경우 json값으로 .xml으로 호출할 경우 xml값으로 리턴
+	- ContentNegotiatingViewResolver의 설정값이 3.1과 3.2이 다름. 3.2처럼 설정해야한다.
+	- 스프링 4.1에서는 리턴하는 json을 만들어주는 라이브러리인 jackson-mapper-asl을 지원안함
+	  (jackson-mapper-asl -> com.fasterxml.jackson.core)
+* ContentNegotiatingViewResolver를 전체적으로 사용하는 것은.. 위험할수도 있겠다. 보안상으로 말이다..	
+
+jstl로 했는데.. 없는 항목은 없는데로 넘어가길 바랬는데 없는 항목을 썼다고 오류가 발생하네?
+
+2. 화면 공통으로 가져가는 것 적어넣기
+3. vo공통도 정하기
+
+---
+
+<템플릿> 
+1. 화면은 user를 기준으로 copy해서 사용하자.
+ 
+	
+---
+기본구조 생성 : STS ->Spring Legacy Project -> Spring MVC Project
+- Spring 4.3.2 (3.1.1에서 4.3.2로 변경)
+- Java 1.8 : 1.6으로 생성되나 1.8로 바꿈

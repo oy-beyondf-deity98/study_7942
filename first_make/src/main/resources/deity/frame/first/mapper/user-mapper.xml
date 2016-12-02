@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="query.user">
+	<select id="listUserCnt" parameterType="deity.frame.first.common.SearchVo" resultType="int">
+		SELECT count(1)
+		  FROM T_USER
+		<if test="search != null">		  
+		 WHERE (USER_ID LIKE '%' || #{search} || '%'
+		        or USER_NM LIKE '%' || #{search} || '%'
+		        or USER_GROUP LIKE '%' || #{search} || '%'
+		       )
+		</if>
+	</select>
+
+	<select id="listUser" parameterType="deity.frame.first.common.SearchVo" resultType="deity.frame.first.domain.User">
+		${pagingStart}
+		SELECT *
+		  FROM T_USER
+		<if test="search != null">		  
+		 WHERE (USER_ID LIKE '%' || #{search} || '%'
+		        or USER_NM LIKE '%' || #{search} || '%'
+		        or USER_GROUP LIKE '%' || #{search} || '%'
+		       )
+		</if>
+		${pagingEnd}
+	</select>
+	<select id="getUser" parameterType="String" resultType="deity.frame.first.domain.User">
+		SELECT *
+		  FROM T_USER
+		 WHERE USER_ID = #{user_id}
+	</select>
+	
+	<insert id="insertUser" parameterType="deity.frame.first.domain.User">
+		INSERT INTO T_USER(
+			   USER_ID
+			 , USER_NM
+			 , USER_PWD
+			 , USER_GROUP
+			 , CREATE_USER
+			 , CREATE_DATE
+			 , UPDATE_USER
+			 , UPDATE_DATE
+		) VALUES (
+			   #{user_id}
+			 , #{user_nm}
+			 , #{user_pwd}
+			 , #{user_group}
+			 , #{create_user}
+			 , SYSDATE
+			 , #{update_user}
+			 , SYSDATE
+		)
+	</insert>
+	
+	<update id="updateUser" parameterType="deity.frame.first.domain.User">
+		UPDATE T_USER
+		   SET USER_NM     = #{user_nm}
+		     , USER_GROUP  = #{user_group}
+		     , UPDATE_USER = #{update_user}
+		     , UPDATE_DATE = SYSDATE
+		 WHERE USER_ID = #{user_id}
+	</update>
+	
+	<update id="updateUserPwd" parameterType="deity.frame.first.domain.User">
+		UPDATE T_USER
+		   SET USER_PWD     = #{user_pwd}
+		     , UPDATE_USER = #{update_user}
+		     , UPDATE_DATE = SYSDATE
+		 WHERE USER_ID = #{user_id}
+	</update>
+	
+	<delete id="deleteUser" parameterType="String">
+		DELETE FROM T_USER
+		 WHERE USER_ID = #{user_id}  
+	</delete>
+	
+	<select id="authObjectUser" parameterType="String" resultType="deity.frame.first.domain.User">
+		SELECT *
+		  FROM T_USER
+		 WHERE USER_ID not in (SELECT USER_ID FROM T_AUTH_USER WHERE AUTH_SEQ = #{auth_seq}) 
+	</select>	
+	
+</mapper>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="query.auth">
+	<select id="listAuthCnt" parameterType="deity.frame.first.common.SearchVo" resultType="int">
+		SELECT count(1)
+		  FROM T_AUTH
+		<if test="search != null">		  
+		</if>
+	</select>
+
+	<select id="listAuth" parameterType="deity.frame.first.common.SearchVo" resultType="deity.frame.first.domain.Auth">
+		${pagingStart}
+		SELECT *
+		  FROM T_AUTH
+		<if test="search != null">		  
+		</if>
+		${pagingEnd}
+	</select>
+	<select id="getAuth" parameterType="String" resultType="deity.frame.first.domain.Auth">
+		SELECT *
+		  FROM T_AUTH
+		 WHERE AUTH_SEQ = #{auth_seq}
+	</select>
+	
+	<insert id="insertAuth" parameterType="deity.frame.first.domain.Auth">
+		INSERT INTO T_AUTH(
+			AUTH_SEQ
+		   ,AUTH_NM
+		   ,AUTH_TYPE
+		   ,REMARK
+		   ,CREATE_USER   
+		   ,CREATE_DATE   
+		   ,UPDATE_USER   
+		   ,UPDATE_DATE			
+		) VALUES (
+			AUTH_SEQ.NEXTVAL
+		   ,#{auth_nm}
+		   ,#{auth_type}
+		   ,#{remark}
+		   ,#{create_user}   
+		   ,SYSDATE   
+		   ,#{update_user}   
+		   ,SYSDATE
+		)
+	</insert>
+	
+	<update id="updateAuth" parameterType="deity.frame.first.domain.Auth">
+		UPDATE T_AUTH
+		   SET AUTH_NM   =#{auth_nm}
+		     , AUTH_TYPE =#{auth_type}
+		     , REMARK    =#{remark}
+		     , UPDATE_USER = #{update_user}  
+		     , UPDATE_DATE = SYSDATE
+		 WHERE AUTH_SEQ = #{auth_seq}		     
+	</update>
+	
+	<delete id="deleteAuth" parameterType="String">
+		DELETE T_AUTH
+		 WHERE AUTH_SEQ = #{auth_seq}		
+		   AND IS_LOCK = 'N'
+	</delete>
+	
+	<select id="grantAuthUser" parameterType="String"  resultType="java.util.HashMap">
+		SELECT A.*
+		     , (SELECT USER_NM FROM T_USER WHERE USER_ID = A.USER_ID) AS USER_NM
+		  FROM T_AUTH_USER A
+		 WHERE AUTH_SEQ = #{auth_seq}
+	</select>
+	
+	<delete id="deleteAuthUser" parameterType="String">
+		DELETE T_AUTH_USER
+		 WHERE AUTH_SEQ = #{auth_seq}		
+	</delete>
+	
+	<insert id="insertAuthUser" parameterType="java.util.HashMap">
+		INSERT INTO T_AUTH_USER(
+			   AUTH_SEQ
+		  	 , USER_ID
+		     , CREATE_USER   
+		     , CREATE_DATE   
+		     , UPDATE_USER   
+		     , UPDATE_DATE				  	 
+	           ) VALUES (
+		       #{auth_seq}
+		     , #{user_id}
+		     , #{create_user}   
+		     , SYSDATE   
+		     , #{update_user}   
+		     , SYSDATE		       
+	           )
+	</insert>	
+	
+	<select id="authObjectMenu" parameterType="String"  resultType="java.util.HashMap">
+		SELECT A.*
+		     , (SELECT MENU_NM FROM T_MENU WHERE MENU_SEQ = A.MENU_SEQ) AS MENU_NM
+		  FROM T_AUTH_MENU A
+		 WHERE AUTH_SEQ = #{auth_seq}
+	</select>	
+	
+	<delete id="deleteAuthMenu" parameterType="String">
+		DELETE T_AUTH_MENU
+		 WHERE AUTH_SEQ = #{auth_seq}		
+	</delete>
+	
+	<insert id="insertAuthMenu" parameterType="java.util.HashMap">
+		INSERT INTO T_AUTH_MENU(
+			   AUTH_SEQ
+		  	 , MENU_SEQ
+		     , CREATE_USER   
+		     , CREATE_DATE   
+		     , UPDATE_USER   
+		     , UPDATE_DATE				  	 
+	           ) VALUES (
+		       #{auth_seq}
+		     , #{menu_seq}
+		     , #{create_user}   
+		     , SYSDATE   
+		     , #{update_user}   
+		     , SYSDATE		       
+	           )
+	</insert>		
+</mapper>

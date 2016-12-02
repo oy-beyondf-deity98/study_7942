@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><templates><template autoinsert="true" context="java" deleted="false" description="컨트롤러 일반" enabled="true" name="_deity_contorller">@Controller
+@RequestMapping("/메인URL")
+public class 도메인클래스Contorller {
+	ModelAndView modelAndView;
+	
+	@Autowired
+    private 도메인클래스DAO 도메인객체DAO;
+	
+	@RequestMapping("/도메인객체_list")
+	public ModelAndView list(@ModelAttribute SearchVo search) {
+		
+		search.pagingInit();
+		List&lt;도메인클래스&gt; 도메인객체List = 도메인객체DAO.list도메인클래스(search);
+        modelAndView = new ModelAndView();
+        modelAndView.setViewName("/메인URL/도메인객체_list");//url과 같으면 안너어도 자동으로 같은것을 넣는듯하다.
+        modelAndView.addObject("list",도메인객체List);
+        modelAndView.addObject("search",search.getSearch());
+        
+        String navi = new Navi(search).getPageNavi();
+        modelAndView.addObject("navi",navi);
+        return modelAndView;
+    }
+
+	
+	@RequestMapping(value="/도메인객체_insert",method=RequestMethod.GET)
+    public ModelAndView insert_pg(@ModelAttribute 도메인클래스 도메인객체,BindingResult result,HttpSession session) {
+		
+		modelAndView = new ModelAndView("/메인URL/도메인객체_insert");
+		
+        return modelAndView;
+    }
+	
+	@RequestMapping(value="/도메인객체_insert",method=RequestMethod.POST)
+    public ModelAndView insert(@ModelAttribute @Valid  도메인클래스 도메인객체,BindingResult result,HttpSession session) {
+		
+		
+		if(result.hasErrors()){
+			
+			System.out.println("오류발생");
+		}else{
+			String create_도메인객체_id = 도메인객체.get도메인클래스_id();
+			
+			도메인클래스 find도메인클래스 = new 도메인클래스();
+			find도메인클래스 = 도메인객체DAO.get도메인클래스(create_도메인객체_id);
+			if(find도메인클래스 == null){
+				String 도메인객체_id = session.getAttribute("도메인객체_id").toString();
+				도메인객체.setCreate_도메인객체(도메인객체_id);
+				도메인객체.setUpdate_도메인객체(도메인객체_id);
+		        도메인객체DAO.insert도메인클래스(도메인객체);
+				
+				modelAndView = new ModelAndView("redirect:/메인URL/도메인객체_list");
+		        
+			}else{
+				
+				//메세지 코드 등록, 다른것을 찾다가 아래 코드를 찾게 된단다.
+				result.rejectValue("도메인객체_id", "field.unique.constraint", null, "이미 존재 합니다.");
+				ObjectError error = new ObjectError("도메인객체_id","이미있는 아이디입니다.");
+				result.addError(error);
+			}
+			
+		}  
+        return modelAndView;
+    }
+	
+	@RequestMapping("get_도메인객체")
+	public ModelAndView get도메인클래스(@RequestParam String 도메인객체_id){
+		도메인클래스 도메인객체 = new 도메인클래스();
+		도메인객체 = 도메인객체DAO.get도메인클래스(도메인객체_id);
+		
+		modelAndView = new ModelAndView();
+		modelAndView.addObject(도메인객체);
+		
+		return modelAndView;
+		
+	}
+	
+	@RequestMapping(value="/도메인객체_update",method=RequestMethod.GET)
+    public ModelAndView update_pg(@RequestParam String 도메인객체_id) {
+		도메인클래스 도메인객체 = new 도메인클래스();
+		도메인객체 = 도메인객체DAO.get도메인클래스(도메인객체_id);
+        modelAndView = new ModelAndView("/메인URL/도메인객체_update");
+        modelAndView.addObject(도메인객체);
+        return modelAndView;
+    }
+	
+	@RequestMapping(value="/도메인객체_update",method=RequestMethod.POST)
+    public ModelAndView update(@ModelAttribute @Valid  도메인클래스 도메인객체,BindingResult result,HttpSession session) {
+		if(result.hasErrors()){
+			System.out.println("오류발생");
+		}
+		
+		String 도메인객체_id = session.getAttribute("도메인객체_id").toString();
+		도메인객체.setUpdate_도메인객체(도메인객체_id);
+        
+		도메인객체DAO.update도메인클래스(도메인객체);
+		
+		//컨트롤러에서 컨트롤러로 호출하기위해서 RedirectView를 쓴다.
+		//setViewName("musicads_story");는 화면 이동일뿐이다.
+
+		modelAndView = new ModelAndView("redirect:/메인URL/도메인객체_list");
+		
+        return modelAndView;
+    }
+	
+	@RequestMapping(value="/도메인객체_pwd_change",method=RequestMethod.POST)
+	public ModelAndView updatePwd(@ModelAttribute 도메인클래스 도메인객체,HttpSession session){
+
+		String 도메인객체_id = session.getAttribute("도메인객체_id").toString();
+		도메인객체.setUpdate_도메인객체(도메인객체_id);
+		도메인객체DAO.update도메인클래스Pwd(도메인객체);
+		
+		return modelAndView;
+	}
+
+	@RequestMapping("/도메인객체_delete")
+    public ModelAndView delete(@ModelAttribute 도메인클래스 도메인객체) {
+		int cnt = 도메인객체DAO.delete도메인클래스(도메인객체.get도메인클래스_id());
+        modelAndView = new ModelAndView();
+		modelAndView.addObject("cnt",cnt);
+        return modelAndView;
+        
+    }
+}</template></templates>
