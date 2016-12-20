@@ -1,0 +1,30 @@
+서버와 서비스, 다이제스터, 종료후크
+# 서버 : ora.apache.catalina.Server인터페이스, 카탈리나 서블릿 컨테이너 전체
+## 전체 시스템을 시작하고 종료할수 있는 세련된 메커니즘을 제공,컴포넌트와 컨테이너, 커넥터까지 모두 종료
+## 엔진은 컨테이너전체를 나타내고 서버는 커넥터까지 합쳐진것을 말하는 것 같다. 
+### 서버는 커넥터까지 합쳐서 실행하고 종료하기 위해서 필요
+# 서비스 :컨테이너나 1개 이상의 커넥터등의 컴포넌트를 포함한다.
+## 커넥터를 한번더 래핑한것 같다. 
+# 다이제스터 : XML문 분석, web.xml, server.xml로 배포설정을 할수 있게해준다.
+## 커먼스 프로젝트에서 진행되고 있는 오픈소스 프로젝트
+## URL : http://jakarta.apache.org/commons/digester
+# 종료후크 : org.apache.catalina.startup.Catalina클래스에서 찾을수 있다. 
+## Catalina객체는 다른 컴포넌트를 관리하는 Server객체를 시작시키는 역할을 한다.
+## 종료후크도 OS단에서 강제로죽이면 실행되지 않는다. 유닉스의 kill, 윈도우의 작업관리자>프로세스끝내기
+## 원리는 쓰레드를 하나 생성하고 있다가 톰캣이 종료되다는 신호가 오면 각 컴포넌트들을 stop시킨다.
+# Deploy : war를 놔두면 저절로 풀려서 컨텍스트가 생기게 한다.
+
+Bootstrap,Catalina(17장)
+실제 톰캣의 시작과 중지는 Bootstrap과 Catalina로 진행된다.
+org.apache.catalina.startup.Catalina클래스는 톰캣을 기동하는 클래스이다.
+이클래스는 %CATALINA_HOME%/conf 디렉토리의 server.xml파일을 파싱할 다이제스터를 포함하고있다.
+또 Service를 포함할 Server객체를 캡슐화하고 있다. 
+
+여러분은 Catalina의 인스턴스를 생성하고 이 인스턴스의 process메소드를 호출함으로써 톰캣을 시작할 수 있다.
+process메소드를 호출할 때는 반드시 올바른 인자를 전달해야 한다. 
+첫째 인자로서 start 또는 stop문자열을 전달할 수 있는데, 톰캣을 시작할때는 start, 중지할때는 stop를 전다하면 된다.
+이외에도 -help, -config, -debug, -nonaming와 같은 process메소드가 받아들일수 있는 여러인자가 존재한다.
+* nonaming는 JNDI네이밍을 지원하지 않도록 하는 인자다.
+
+비록 Catalina클래스가 진입점의 역할을 하는 main메소드를 갖고 있다 할지라도 보통의 경우엔 Bootsrap 클래스를 사용해 Catalina의 인스턴스를 생성하고 process 메소드를 호출하는 방법을 사용한다.
+start메소드는 server.xml파일을 처리하게 한다. 
