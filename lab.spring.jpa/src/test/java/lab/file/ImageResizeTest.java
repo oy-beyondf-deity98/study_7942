@@ -31,7 +31,7 @@ public class ImageResizeTest {
         RenderedOp rOp = JAI.create("fileload", pb);
 
         //실제 크기 변경을 위한 셋팅
-       System.setProperty("java.awt.headless", "true"); 
+        System.setProperty("java.awt.headless", "true"); 
 
         //입력 파일에 대해 BufferedImage형식으로 받아 온다.
         BufferedImage im = rOp.getAsBufferedImage();

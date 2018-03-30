@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>net.deity</groupId>
   <artifactId>lab.spring.jpa</artifactId>
-  <packaging>war</packaging>
+  <packaging>pom</packaging>
   <version>0.0.1-SNAPSHOT</version>
   <name>lab.spring.jpa Maven Webapp</name>
   <url>http://maven.apache.org</url>
@@ -73,7 +73,35 @@
 		<groupId>com.google.code.gson</groupId>
 		<artifactId>gson</artifactId>
 		<version>2.6.2</version>
-	</dependency>   
+	</dependency>
+	<dependency><!-- excel jxl-->
+		<groupId>net.sourceforge.jexcelapi</groupId>
+		<artifactId>jxl</artifactId>
+		<version>2.6.12</version>
+	</dependency>
+	<dependency>
+		<groupId>org.apache.poi</groupId>
+		<artifactId>poi</artifactId>
+		<version>3.7</version>
+	</dependency>    
+	<dependency>
+		<groupId>org.apache.poi</groupId>
+		<artifactId>poi-ooxml</artifactId>
+		<version>3.7</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.apache.poi</groupId>
+	    <artifactId>poi-scratchpad</artifactId>
+	    <version>3.7</version>
+    </dependency>
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-integration</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-undertow</artifactId>
+	</dependency>
   </dependencies>  
   
   <build>
@@ -102,4 +130,10 @@
   </build>
 
  
+  <modules>
+  	<module>documentText</module>
+  	
+  	
+  	<module>../java-hwp</module>
+  </modules>
 </project>

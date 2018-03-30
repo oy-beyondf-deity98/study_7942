@@ -8,6 +8,7 @@ public class TestController {
 
 	@RequestMapping("/test")
 	String body(){
+		
 		return "test/test";
 	}
 	
