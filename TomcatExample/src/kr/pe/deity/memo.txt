@@ -1,7 +1,0 @@
-1. 간단한 HttpServer라는 소켓통신을 만들자.
-> 요건1 : 8080포트 사용
-> 요건2 : 브라우저에서 http://localhost:8080/index.html 호출시 에러나지 않도록 코딩
-> 요건3 : 정적자원을 처리한다.
-
-2. 서블릿 컨테이너 만들기
-> 요건1 : http://localhost:8080/servlet/PrimitiveServlet라는 서블릿을 호출하여 처리하는 프로그램 만들기  
