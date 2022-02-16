@@ -26,8 +26,7 @@
 2. 간트 차트 만들기
   - 라이브러리 사용, TREE GRID
 3. maven 아키타입을 만들고 아키타입으로 프로젝트를 만드는 연습을 했었다.
-  
-  
+ 
 사용 라이브러리
   - MyBatis, JPA, TREE GRID, log4j
   - eclipse, spring MVC, spring boot, spring security
